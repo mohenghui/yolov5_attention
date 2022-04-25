@@ -926,9 +926,9 @@ class CBAMBottleneck(nn.Module):
         self.cv1 = Conv(c1, c_, 1, 1)
         self.cv2 = Conv(c_, c2, 3, 1, g=g)
         self.add = shortcut and c1 == c2
-        # self.channel_attention = ChannelAttention(c2, ratio)
-        # self.spatial_attention = SpatialAttention(kernel_size)
-        self.cbam=CBAM(c1,c2,ratio,kernel_size)
+        self.channel_attention = ChannelAttention(c2, ratio)
+        self.spatial_attention = SpatialAttention(kernel_size)
+        #self.cbam=CBAM(c1,c2,ratio,kernel_size)
     def forward(self, x):
         x1=self.cv2(self.cv1(x))
         out = self.channel_attention(x1) * x1
